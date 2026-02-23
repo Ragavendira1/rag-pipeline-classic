@@ -1,0 +1,238 @@
+<mxfile host="app.diagrams.net" modified="2026-02-22T00:00:00.000Z" agent="Claude" version="24.0.0" type="device">
+  <diagram id="rag-pipeline-architecture" name="RAG Pipeline Architecture">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="RAG Pipeline Classic - Architecture" style="text;html=1;fontSize=24;fontStyle=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontColor=#1a1a2e;" vertex="1" parent="1">
+          <mxGeometry x="480" y="20" width="480" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== USER / CLIENT ==================== -->
+        <mxCell id="user" value="User / Client" style="shape=actor;whiteSpace=wrap;html=1;fontSize=13;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;arcSize=20;" vertex="1" parent="1">
+          <mxGeometry x="60" y="340" width="80" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== FASTAPI SERVER BOX ==================== -->
+        <mxCell id="api-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;dashed=1;arcSize=8;" vertex="1" parent="1">
+          <mxGeometry x="200" y="80" width="950" height="700" as="geometry" />
+        </mxCell>
+        <mxCell id="api-box-label" value="FastAPI Server  (apps/api.py)&lt;br&gt;&lt;font style='font-size:11px;font-weight:normal;'&gt;http://localhost:8000&lt;/font&gt;" style="text;html=1;fontSize=15;fontStyle=1;align=left;verticalAlign=top;fillColor=none;strokeColor=none;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="220" y="90" width="300" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== API ENDPOINTS ==================== -->
+        <mxCell id="endpoints-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="230" y="150" width="200" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="endpoints-label" value="API Endpoints" style="text;html=1;fontSize=14;fontStyle=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontColor=#6a1b9a;" vertex="1" parent="1">
+          <mxGeometry x="260" y="160" width="140" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ep-health" value="GET /health" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#e8f5e9;strokeColor=#4caf50;arcSize=20;" vertex="1" parent="1">
+          <mxGeometry x="260" y="210" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ep-ingest" value="POST /ingest" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#fff3e0;strokeColor=#ff9800;arcSize=20;" vertex="1" parent="1">
+          <mxGeometry x="260" y="280" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ep-search" value="POST /search" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#e3f2fd;strokeColor=#2196f3;arcSize=20;" vertex="1" parent="1">
+          <mxGeometry x="260" y="350" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ep-chat" value="POST /chat" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#fce4ec;strokeColor=#e91e63;arcSize=20;" vertex="1" parent="1">
+          <mxGeometry x="260" y="430" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ep-docs" value="GET /docs&lt;br&gt;&lt;font style='font-size:10px;font-weight:normal;'&gt;Swagger UI&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f3e5f5;strokeColor=#9c27b0;arcSize=20;" vertex="1" parent="1">
+          <mxGeometry x="260" y="510" width="140" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- User to endpoints arrows -->
+        <mxCell id="user-to-api" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;strokeColor=#6c8ebf;strokeWidth=2;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" source="user" target="ep-ingest" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="user-to-api-label" value="HTTP&lt;br&gt;JSON" style="edgeLabel;html=1;fontSize=10;fontColor=#6c8ebf;fontStyle=1;" vertex="1" connectable="0" parent="user-to-api">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="user-to-chat" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;strokeColor=#e91e63;strokeWidth=2;exitX=1;exitY=0.7;entryX=0;entryY=0.5;" edge="1" source="user" target="ep-chat" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== INGESTION PIPELINE ==================== -->
+        <mxCell id="ingest-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff8e1;strokeColor=#f9a825;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="490" y="150" width="630" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="ingest-label" value="Ingestion Pipeline" style="text;html=1;fontSize=14;fontStyle=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontColor=#e65100;" vertex="1" parent="1">
+          <mxGeometry x="510" y="155" width="180" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Step 1: PDF/TXT Input -->
+        <mxCell id="doc-input" value="📄 PDF / TXT&lt;br&gt;&lt;font style='font-size:10px;'&gt;docs/&lt;/font&gt;" style="shape=document;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#fff9c4;strokeColor=#f9a825;size=0.15;" vertex="1" parent="1">
+          <mxGeometry x="510" y="200" width="110" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Step 2: Ingestion Module -->
+        <mxCell id="ingestion" value="Ingestion&lt;br&gt;&lt;font style='font-size:10px;font-weight:normal;'&gt;ingestion.py&lt;br&gt;Extract text&lt;br&gt;from pages&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#ffe0b2;strokeColor=#ff9800;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="660" y="195" width="120" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Step 3: Chunking -->
+        <mxCell id="chunking" value="Chunking&lt;br&gt;&lt;font style='font-size:10px;font-weight:normal;'&gt;512 chars&lt;br&gt;64 overlap&lt;br&gt;page tracking&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#ffe0b2;strokeColor=#ff9800;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="820" y="195" width="120" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Step 4: Embedding + Upsert -->
+        <mxCell id="embedding" value="Embed &amp; Upsert&lt;br&gt;&lt;font style='font-size:10px;font-weight:normal;'&gt;embedding.py&lt;br&gt;Batch upsert&lt;br&gt;(96 per batch)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#ffe0b2;strokeColor=#ff9800;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="980" y="195" width="120" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Ingestion flow arrows -->
+        <mxCell id="doc-to-ingest" style="rounded=1;orthogonalLoop=1;strokeColor=#ff9800;strokeWidth=2;" edge="1" source="doc-input" target="ingestion" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ingest-to-chunk" style="rounded=1;orthogonalLoop=1;strokeColor=#ff9800;strokeWidth=2;" edge="1" source="ingestion" target="chunking" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="chunk-to-embed" style="rounded=1;orthogonalLoop=1;strokeColor=#ff9800;strokeWidth=2;" edge="1" source="chunking" target="embedding" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Endpoint to ingestion pipeline -->
+        <mxCell id="ep-ingest-to-pipeline" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;strokeColor=#ff9800;strokeWidth=2;entryX=0;entryY=0.5;" edge="1" source="ep-ingest" target="doc-input" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== QUERY PIPELINE ==================== -->
+        <mxCell id="query-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8f5e9;strokeColor=#43a047;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="490" y="400" width="630" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="query-label" value="Query Pipeline" style="text;html=1;fontSize=14;fontStyle=1;align=left;verticalAlign=middle;fillColor=none;strokeColor=none;fontColor=#2e7d32;" vertex="1" parent="1">
+          <mxGeometry x="510" y="405" width="180" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Step 5: Retrieval -->
+        <mxCell id="retrieval" value="Retrieval&lt;br&gt;&lt;font style='font-size:10px;font-weight:normal;'&gt;retrival.py&lt;br&gt;Semantic search&lt;br&gt;Top-K = 10&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#c8e6c9;strokeColor=#43a047;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="510" y="450" width="130" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Step 6: Reranker -->
+        <mxCell id="reranker" value="Reranker&lt;br&gt;&lt;font style='font-size:10px;font-weight:normal;'&gt;reranker.py&lt;br&gt;bge-reranker-v2-m3&lt;br&gt;Top-N = 5&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#c8e6c9;strokeColor=#43a047;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="690" y="450" width="140" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Step 7: Generation -->
+        <mxCell id="generation" value="Generation&lt;br&gt;&lt;font style='font-size:10px;font-weight:normal;'&gt;generation.py&lt;br&gt;Cited answer&lt;br&gt;with references&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#c8e6c9;strokeColor=#43a047;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="880" y="450" width="130" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Answer output -->
+        <mxCell id="answer" value="📝 Answer&lt;br&gt;&lt;font style='font-size:10px;font-weight:normal;'&gt;with citations&lt;br&gt;&amp; sources&lt;/font&gt;" style="shape=document;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#e8f5e9;strokeColor=#43a047;size=0.15;" vertex="1" parent="1">
+          <mxGeometry x="1050" y="447" width="110" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Query flow arrows -->
+        <mxCell id="ret-to-rerank" style="rounded=1;orthogonalLoop=1;strokeColor=#43a047;strokeWidth=2;" edge="1" source="retrieval" target="reranker" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rerank-to-gen" style="rounded=1;orthogonalLoop=1;strokeColor=#43a047;strokeWidth=2;" edge="1" source="reranker" target="generation" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="gen-to-answer" style="rounded=1;orthogonalLoop=1;strokeColor=#43a047;strokeWidth=2;" edge="1" source="generation" target="answer" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Endpoint to query pipeline -->
+        <mxCell id="ep-chat-to-pipeline" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;strokeColor=#e91e63;strokeWidth=2;entryX=0;entryY=0.5;" edge="1" source="ep-chat" target="retrieval" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ep-search-to-ret" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;strokeColor=#2196f3;strokeWidth=2;dashed=1;entryX=0;entryY=0.3;" edge="1" source="ep-search" target="retrieval" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== EXTERNAL SERVICES ==================== -->
+
+        <!-- Pinecone -->
+        <mxCell id="pinecone-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f2f1;strokeColor=#00897b;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="700" y="660" width="260" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="pinecone" value="☁️ Pinecone (Serverless)&lt;br&gt;&lt;font style='font-size:11px;font-weight:normal;'&gt;Index: rag-pipeline-classic&lt;br&gt;Embed: multilingual-e5-large&lt;br&gt;Rerank: bge-reranker-v2-m3&lt;/font&gt;" style="text;html=1;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontColor=#00695c;" vertex="1" parent="1">
+          <mxGeometry x="710" y="665" width="240" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- OpenAI -->
+        <mxCell id="openai-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce4ec;strokeColor=#c62828;strokeWidth=2;arcSize=10;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="660" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="openai" value="☁️ OpenAI API&lt;br&gt;&lt;font style='font-size:11px;font-weight:normal;'&gt;Model: gpt-4o-mini&lt;br&gt;Max tokens: 1024&lt;br&gt;Temperature: 0.2&lt;/font&gt;" style="text;html=1;fontSize=13;fontStyle=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;fontColor=#b71c1c;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="665" width="180" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Connections to external services -->
+        <mxCell id="embed-to-pinecone" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;strokeColor=#00897b;strokeWidth=2;dashed=1;" edge="1" source="embedding" target="pinecone-box" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1040" y="370" />
+              <mxPoint x="1170" y="370" />
+              <mxPoint x="1170" y="640" />
+              <mxPoint x="830" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="embed-to-pinecone-label" value="Upsert vectors" style="edgeLabel;html=1;fontSize=10;fontColor=#00897b;fontStyle=1;" vertex="1" connectable="0" parent="embed-to-pinecone">
+          <mxGeometry x="0.1" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="ret-to-pinecone" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;strokeColor=#00897b;strokeWidth=2;dashed=1;" edge="1" source="retrieval" target="pinecone-box" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="575" y="580" />
+              <mxPoint x="575" y="640" />
+              <mxPoint x="760" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ret-to-pinecone-label" value="Search" style="edgeLabel;html=1;fontSize=10;fontColor=#00897b;fontStyle=1;" vertex="1" connectable="0" parent="ret-to-pinecone">
+          <mxGeometry x="0.3" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="rerank-to-pinecone" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;strokeColor=#00897b;strokeWidth=2;dashed=1;" edge="1" source="reranker" target="pinecone-box" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="580" />
+              <mxPoint x="760" y="640" />
+              <mxPoint x="830" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rerank-to-pinecone-label" value="Rerank" style="edgeLabel;html=1;fontSize=10;fontColor=#00897b;fontStyle=1;" vertex="1" connectable="0" parent="rerank-to-pinecone">
+          <mxGeometry x="0.3" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="gen-to-openai" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;strokeColor=#c62828;strokeWidth=2;dashed=1;" edge="1" source="generation" target="openai-box" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="945" y="580" />
+              <mxPoint x="945" y="640" />
+              <mxPoint x="1100" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gen-to-openai-label" value="LLM call" style="edgeLabel;html=1;fontSize=10;fontColor=#c62828;fontStyle=1;" vertex="1" connectable="0" parent="gen-to-openai">
+          <mxGeometry x="0.3" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- ==================== CONFIG ==================== -->
+        <mxCell id="config" value="⚙️ Config&lt;br&gt;&lt;font style='font-size:10px;font-weight:normal;'&gt;config.py + .env&lt;br&gt;API keys, chunk size,&lt;br&gt;model settings&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;fontStyle=1;fillColor=#f5f5f5;strokeColor=#9e9e9e;arcSize=12;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="660" width="160" height="100" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

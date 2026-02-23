@@ -1,7 +1,7 @@
 from typing import List, Dict
 
 from pinecone import Pinecone
-from .retrival import search as retrieve_search
+from .retrieval import search as retrieve_search
 
 from .config import (
     PINECONE_API_KEY,

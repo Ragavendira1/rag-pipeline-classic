@@ -5,8 +5,8 @@ from .config import RERANK_TOP_N, TOP_K
 from .embedding import is_file_ingested, upsert_chunks
 from .generation import generate_answer
 from .ingestion import ingest_document
-from .retrival import search as retrieve_search
-from .reranker import search as rerank_search
+from .retrieval import search as retrieve_search
+from .reranker import rerank as rerank_search
 
 
 def _ids(hits: List[Dict]) -> List[str]:

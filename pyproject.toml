@@ -1,7 +1,7 @@
 [project]
 name = "rag-pipeline-classic"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Retrieval-Augmented Generation pipeline using Pinecone, OpenAI, and FastAPI"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [

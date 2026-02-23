@@ -2,6 +2,8 @@
 
 A Retrieval-Augmented Generation (RAG) pipeline built with FastAPI, Pinecone, and OpenAI. Ingest PDF/text documents, store embeddings in Pinecone, and ask questions with cited, context-grounded answers.
 
+> For detailed component design, tradeoffs, and rationale see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
 ## Architecture
 
 ```
@@ -116,22 +118,88 @@ Response:
 }
 ```
 
+### Search Chunks
+
+```
+POST /search
+```
+
+Request:
+```json
+{
+  "query": "What was Apple's total revenue?",
+  "top_k": 10,
+  "use_reranker": true
+}
+```
+
+Response:
+```json
+{
+  "query": "What was Apple's total revenue?",
+  "chunks": [
+    {
+      "id": "Apple_Q24.pdf::chunk_1",
+      "score": 0.82,
+      "source": "Apple_Q24.pdf",
+      "pages": "1",
+      "chunk_text": "...",
+      "citation": "Apple_Q24.pdf, p.1"
+    }
+  ],
+  "pipeline": "retrieval + reranker"
+}
+```
+
+### Chat (End-to-End RAG)
+
+```
+POST /chat
+```
+
+Request:
+```json
+{
+  "question": "What was Apple's total revenue in Q4 2024?",
+  "use_reranker": true,
+  "top_k": 10,
+  "top_n": 5,
+  "debug": false
+}
+```
+
+Response:
+```json
+{
+  "answer": "Apple's total net sales for Q4 2024 were $94.9 billion [1]...\n\nReferences:\n[1] Apple_Q24.pdf, p.1",
+  "source_chunks": [...]
+}
+```
+
+Set `debug: true` to include raw `retrieved` and `reranked` chunks in the response for inspection.
+
 ## Project Structure
 
 ```
 rag-pipeline-classic/
 ├── apps/
-│   ├── __init__.py
-│   ├── api.py           # FastAPI endpoints
-│   ├── config.py         # Environment variables and settings
-│   ├── ingestion.py      # PDF/TXT parsing and chunking
-│   ├── embedding.py      # Pinecone index creation and upsert
-│   ├── retrival.py       # Semantic search over Pinecone
-│   ├── reranker.py       # Reranking with bge-reranker-v2-m3
-│   └── generation.py     # Answer generation with OpenAI
-├── docs/                 # Sample documents for ingestion
+│   ├── __init__.py          # Package marker
+│   ├── config.py            # Centralized configuration
+│   ├── ingestion.py         # PDF/TXT extraction and chunking
+│   ├── embedding.py         # Pinecone index management and upsert
+│   ├── retrieval.py         # Semantic search over Pinecone
+│   ├── reranker.py          # Cross-encoder reranking
+│   ├── generation.py        # LLM answer generation with citations
+│   ├── api.py               # FastAPI endpoints
+│   └── testrag.py           # End-to-end pipeline test script
+├── docs/
+│   ├── ARCHITECTURE.md      # Detailed architecture document
+│   ├── architecture.drawio  # Visual architecture diagram
+│   └── Apple_Q24.pdf        # Sample document
 ├── pyproject.toml
-├── .env                  # API keys (not committed)
+├── uv.lock
+├── .env                     # API keys (not committed)
+├── .gitignore
 └── README.md
 ```
 
