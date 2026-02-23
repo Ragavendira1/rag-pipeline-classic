@@ -1,0 +1,19 @@
+# Secrets
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# Claude
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# OS
+.DS_Store
